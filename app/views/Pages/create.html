@@ -1,0 +1,25 @@
+#{extends 'main.html' /}
+#{set title:'New Page' /}
+
+<ul class="breadcrumb">
+    <li><a href="@{Galaxies.index()}">Galaxies</a><span class="divider">:</span></li>
+    <li><a href="@{Galaxies.read(galaxy.id)}">${galaxy.name}</a><span class="divider">/</span></li>
+    <li><a href="@{Sites.index(galaxy.id)}">Sites</a><span class="divider">:</span></li>
+    <li><a href="@{Sites.read(galaxy.id, site.id)}">${site.name}</a><span class="divider">/</span></li>
+    <li><a href="@{Categories.index(galaxy.id,site.id)}">Categories</a><span class="divider">:</span></li>
+    <li><a href="@{Categories.read(galaxy.id,site.id,category.id)}">${category.name}</a><span class="divider">/</span></li>
+    <li><a href="@{Pages.index(galaxy.id,site.id,category.id)}">Pages</a><span class="divider">:</span></li>
+    <li>Create</li>
+</ul>
+
+<h1>New page</h1>
+#{form action:@Pages.createPost(galaxy.id, site.id, category.id)}
+<p>Galaxy: ${galaxy.name}</p>
+<p>Site: ${site.name}</p>
+<p>Category: ${category.name}</p>
+<p>Title: <input type="text" name="title"/></p>
+<p>Excerpt: <textarea name="excerpt"> </textarea></p>
+<p>Content: <textarea name="content"> </textarea></p>
+<p><input type="submit" value="Create"/></p>
+#{/form}
+

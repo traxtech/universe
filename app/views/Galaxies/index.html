@@ -1,0 +1,28 @@
+#{extends 'main.html' /}
+#{set title:'Galaxies' /}
+
+<ul class="breadcrumb">
+    <li>Galaxies</li>
+</ul>
+
+<div class="row">
+    <div class="span8">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Galaxy name</th>
+                </tr>
+            </thead>
+            <tbody>
+                #{list items:galaxies,as:'galaxy'}
+                <tr>
+                    <td><a href="@{Galaxies.read(galaxy.id)}">${galaxy.name}</a></td>
+                </tr>
+                #{/list}
+            </tbody>
+        </table>
+    </div>
+    <div class="span4">
+        <a class="btn" href="@{Galaxies.create()}">New Galaxy</a>
+    </div>
+</div>

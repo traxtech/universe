@@ -1,0 +1,32 @@
+#{extends 'main.html' /}
+#{set title:'Root catageories of site ' + site.name + ' of galaxy ' + galaxy.name /}
+
+<ul class="breadcrumb">
+    <li><a href="@{Galaxies.index()}">Galaxies</a><span class="divider">:</span></li>
+    <li><a href="@{Galaxies.read(galaxy.id)}">${galaxy.name}</a><span class="divider">/</span></li>
+    <li><a href="@{Sites.index(galaxy.id)}">Sites</a><span class="divider">:</span></li>
+    <li><a href="@{Sites.read(galaxy.id, site.id)}">${site.name}</a><span class="divider">/</span></li>
+    <li>Categories</li>
+</ul>
+
+<div class="row">
+    <div class="span8">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Root category</th>
+                </tr>
+            </thead>
+            <tbody>
+                #{list items:categories,as:'category'}
+                <tr>
+                    <td><a href="@{Categories.read(galaxy.id, site.id, category.id)}">${category.name}</a></td>
+                </tr>
+                #{/list}
+            </tbody>
+        </table>
+    </div>
+    <div class="span4">
+        <a class="btn" href="@{Categories.create(galaxy.id, site.id)}">New Category</a>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+#{extends 'main.html' /}
+#{set title:galaxy.name /}
+
+<ul class="breadcrumb">
+    <li><a href="@{Galaxies.index()}">Galaxies</a><span class="divider">:</span></li>
+    <li>${galaxy.name}</li>
+</ul>
+
+<h1>${galaxy.name}</h1>
+<a href="@{Sites.index(galaxy.id)}">Sites</a>

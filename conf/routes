@@ -1,0 +1,37 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+GET     /g                                                                      Galaxies.index
+GET     /g/create                                                               Galaxies.create
+POST    /g/create                                                               Galaxies.createPost
+GET     /g/{galaxyId}                                                           Galaxies.read
+
+GET     /g/{galaxyId}/s                                                         Sites.index
+GET     /g/{galaxyId}/s/create                                                  Sites.create
+POST    /g/{galaxyId}/s/create                                                  Sites.createPost
+GET     /g/{galaxyId}/s/{siteId}                                                Sites.read
+
+GET     /g/{galaxyId}/s/{siteId}/c                                              Categories.index
+GET     /g/{galaxyId}/s/{siteId}/c/create                                       Categories.create
+POST    /g/{galaxyId}/s/{siteId}/c/create                                       Categories.createPost
+GET     /g/{galaxyId}/s/{siteId}/c/{categoryId}                                 Categories.read
+
+GET     /g/{galaxyId}/s/{siteId}/c/{categoryId}/p                               Pages.index
+GET     /g/{galaxyId}/s/{siteId}/c/{categoryId}/p/create                        Pages.create
+POST    /g/{galaxyId}/s/{siteId}/c/{categoryId}/p/create                        Pages.createPost
+GET     /g/{galaxyId}/s/{siteId}/c/{categoryId}/p/{pageId}                      Pages.read
+
+# Home page
+GET     /                                                                       Application.site
+GET     /c/{categoryId}                                                         Application.category
+GET     /p/{pageId}                                                             Application.page
+
+# Ignore favicon requests
+GET     /favicon.ico                            404
+
+# Map static resources from the /app/public folder to the /public path
+GET     /public/                                staticDir:public
+
+# Catch all
+*       /{controller}/{action}                  {controller}.{action}

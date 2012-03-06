@@ -1,0 +1,15 @@
+#{extends 'main.html' /}
+#{set title:page.title /}
+
+<ul class="breadcrumb">
+    <li><a href="@{Galaxies.index()}">Galaxies</a><span class="divider">:</span></li>
+    <li><a href="@{Galaxies.read(galaxy.id)}">${galaxy.name}</a><span class="divider">/</span></li>
+    <li><a href="@{Sites.index(galaxy.id)}">Sites</a><span class="divider">:</span></li>
+    <li><a href="@{Sites.read(galaxy.id, site.id)}">${site.name}</a><span class="divider">/</span></li>
+    <li><a href="@{Categories.index(galaxy.id,site.id)}">Categories</a><span class="divider">:</span></li>
+    <li><a href="@{Categories.read(galaxy.id,site.id,category.id)}">${category.name}</a><span class="divider">/</span></li>
+    <li><a href="@{Pages.index(galaxy.id,site.id,category.id)}">Pages</a><span class="divider">:</span></li>
+    <li>${page.title}</li>
+</ul>
+
+${page.htmlContent.raw()}

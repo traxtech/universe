@@ -1,0 +1,27 @@
+#{extends 'main.html' /}
+#{set title:'New Category' /}
+
+#{if category == null}
+
+<h1>New root category</h1>
+#{form action:@Categories.createPost(galaxy.id, site.id)}
+<p>Galaxy: ${galaxy.name}</p>
+<p>Site: ${site.name}</p>
+<p>Name: <input type="text" name="name"/></p>
+<p><input type="submit" value="Create"/></p>
+#{/form}
+
+#{/if}
+#{else}
+
+<h1>New category</h1>
+#{form action:@Categories.createPost(galaxy.id, site.id, category.id)}
+<p>Galaxy: ${galaxy.name}</p>
+<p>Site: ${site.name}</p>
+<p>Parent category: ${category.name}</p>
+<p>Name: <input type="text" name="name"/></p>
+<p><input type="submit" value="Create"/></p>
+#{/form}
+
+#{/else}
+

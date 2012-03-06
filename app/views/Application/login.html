@@ -1,0 +1,8 @@
+#{extends 'main.html' /}
+#{set title:'Login' /}
+
+#{form action:@Application.loginPost()}
+<p>Login:<br/><input type="text" name="login"/></p>
+<p>Password:<br/><input type="password" name="plainPassword"/></p>
+<p><input type="submit" value="Login"/></p>
+#{/form}

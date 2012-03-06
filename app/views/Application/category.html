@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>${category.name}</title>
+        <meta charset="${_response_encoding}">
+        <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/bootstrap.min.css'}">
+        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+        <script src="@{'/public/javascripts/jquery-1.7.1.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+        <script src="@{'/public/javascripts/bootstrap.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+    </head>
+    <body>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="@{Application.site()}">${site.name}</a>
+                    <div class="nav-collapse">
+                        <ul class="nav">
+                            #{list items:categories,as:'categoryMenu'}
+                            %{ children = categoryMenu.children() }%
+                            #{if children.size() == 0}
+                            <li><a href="@{Application.category(categoryMenu.id)}">${categoryMenu.name}</a></li>
+                            #{/if}
+                            #{else}
+                            <li class="dropdown">
+                                <a href="#"
+                                   class="dropdown-toggle"
+                                   data-toggle="dropdown">
+                                    ${categoryMenu.name}
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    #{list items:children,as:'child'}
+                                    <li><a href="@{Application.category(child.id)}">${child.name}</a></li>
+                                    #{/list}
+                                </ul>
+                            </li>
+                            #{/else}
+
+                            #{/list}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <h1>${category.name}</h1>
+            <hr/>
+            ${category.htmlDescription.raw()}
+            #{list items:category.lastPages(),as:'lastPage'}
+            <h3><a href="@{Application.page(lastPage.id)}">${lastPage.title}</a></h3>
+            <p>${lastPage.created.format('yyyy-MM-dd HH:mm')}</p>
+            ${lastPage.htmlExcerpt.raw()}
+            <hr/>
+            #{/list}
+        </div>
+    </body>
+</html>

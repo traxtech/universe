@@ -1,0 +1,34 @@
+#{extends 'main.html' /}
+#{set title:'Pages of category ' + category.name /}
+
+<ul class="breadcrumb">
+    <li><a href="@{Galaxies.index()}">Galaxies</a><span class="divider">:</span></li>
+    <li><a href="@{Galaxies.read(galaxy.id)}">${galaxy.name}</a><span class="divider">/</span></li>
+    <li><a href="@{Sites.index(galaxy.id)}">Sites</a><span class="divider">:</span></li>
+    <li><a href="@{Sites.read(galaxy.id, site.id)}">${site.name}</a><span class="divider">/</span></li>
+    <li><a href="@{Categories.index(galaxy.id,site.id)}">Categories</a><span class="divider">:</span></li>
+    <li><a href="@{Categories.read(galaxy.id,site.id,category.id)}">${category.name}</a><span class="divider">/</span></li>
+    <li>Pages</li>
+</ul>
+
+<div class="row">
+    <div class="span8">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                </tr>
+            </thead>
+            <tbody>
+                #{list items:pages,as:'page'}
+                <tr>
+                    <td><a href="@{Pages.read(galaxy.id,site.id,category.id,page.id)}">${page.title}</a></td>
+                </tr>
+                #{/list}
+            </tbody>
+        </table>
+    </div>
+    <div class="span4">
+        <a class="btn" href="@{Pages.create(galaxy.id,site.id,category.id)}">New Page</a>
+    </div>
+</div>
