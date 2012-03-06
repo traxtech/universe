@@ -22,6 +22,16 @@ public class Galaxies extends AuthController {
     }
 
     public static void createPost(String name) {
+        // Params check
+        checkAuthenticity();
+        validation.required(name);
+        validation.minSize(name, 4);
+        if (validation.hasErrors()) {
+            params.flash();
+            validation.keep();
+            create();
+        }
+        // Action
         Galaxy galaxy = new Galaxy(name);
         galaxy.save();
         index();

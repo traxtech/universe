@@ -1,0 +1,7 @@
+<div class="control-group #{ifError _name}error#{/ifError}">
+    <label class="control-label" for="${_name}Input">${_desc}:</label>
+    <div class="controls">
+        <input class="input-xlarge focused" data-datepicker="datepicker" id="${_name}Input" type="text" name="${_name}" value="${flash[_name]}"/>
+        #{ifError _name}<span class="help-inline">#{error _name/}</span>#{/ifError}
+    </div>
+</div>

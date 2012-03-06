@@ -49,13 +49,29 @@ public class Application extends Controller {
     }
     
     public static void loginPost(String login, String plainPassword) {
+        checkAuthenticity();
+        validation.required(login);
+        validation.minSize(login, 2);
+        validation.required(plainPassword);
+        validation.minSize(plainPassword, 2);
+        if (validation.hasErrors()) {
+            params.flash();
+            validation.keep();
+            login();
+        }
         Account account = Account.findByLogin(login);
         if (account == null) {
-            Logger.info("NO ACCOUNT " + login);
+            validation.addError("login", "Invalid login and/or password");
+            validation.addError("plainPassword", "Invalid login and/or password");
+            params.flash();
+            validation.keep();
             login();
         }
         if(!account.checkPassword(plainPassword)) {
-            Logger.info("BAD PASSWORD");
+            validation.addError("login", "Invalid login and/or password");
+            validation.addError("plainPassword", "Invalid login and/or password");
+            params.flash();
+            validation.keep();
             login();
         }
         session.put(AuthController.SESSION_CLEF_ACCESS, account.access);

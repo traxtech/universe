@@ -26,6 +26,8 @@ GET     /g/{galaxyId}/s/{siteId}/c/{categoryId}/p/{pageId}                      
 GET     /                                                                       Application.site
 GET     /c/{categoryId}                                                         Application.category
 GET     /p/{pageId}                                                             Application.page
+GET     /login                                                                  Application.login
+POST    /login                                                                  Application.loginPost
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

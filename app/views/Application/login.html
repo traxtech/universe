@@ -1,8 +1,7 @@
 #{extends 'main.html' /}
 #{set title:'Login' /}
 
-#{form action:@Application.loginPost()}
-<p>Login:<br/><input type="text" name="login"/></p>
-<p>Password:<br/><input type="password" name="plainPassword"/></p>
-<p><input type="submit" value="Login"/></p>
-#{/form}
+#{bsForm action:@Application.loginPost(), actionText:'Connect'}
+#{bsInputText name:'login',desc:'Login' /}
+#{bsInputPassword name:'plainPassword',desc:'Password' /}
+#{/bsForm}

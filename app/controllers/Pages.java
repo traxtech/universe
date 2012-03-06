@@ -49,6 +49,7 @@ public class Pages extends AuthController {
     }
     
     public static void createPost(Long galaxyId, Long siteId, Long categoryId, String title, String excerpt, String content) {
+        // Path check
         Galaxy galaxy = Galaxy.findById(galaxyId);
         if(galaxy == null) {
             notFound();
@@ -61,6 +62,20 @@ public class Pages extends AuthController {
         if(category == null || !category.site.equals(site)) {
             notFound();
         }
+        // Params check
+        checkAuthenticity();
+        validation.required(title);
+        validation.minSize(title, 4);
+        validation.required(excerpt);
+        validation.minSize(excerpt, 10);
+        validation.required(content);
+        validation.minSize(content, 100);
+        if (validation.hasErrors()) {
+            params.flash();
+            validation.keep();
+            create(galaxyId, siteId, categoryId);
+        }
+        // Action
         Page page = new Page(category, title, excerpt, content);
         page.save();
         index(galaxyId, siteId, categoryId);

@@ -1,0 +1,9 @@
+<form id="${_name}Form" action="${_action}" method="post">
+    #{authenticityToken /}
+    <fieldset>
+        #{doBody /}
+        <div class="form-actions">
+            <button id="${_name}Submit" type="submit" class="btn btn-primary">${_actionText}</button>
+        </div>
+    </fieldset>
+</form>

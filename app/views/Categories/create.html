@@ -1,27 +1,34 @@
 #{extends 'main.html' /}
-#{set title:'New Category' /}
+#{set title:'Add Category' /}
+
+<ul class="breadcrumb">
+    <li><a href="@{Galaxies.index()}">Galaxies</a><span class="divider">:</span></li>
+    <li><a href="@{Galaxies.read(galaxy.id)}">${galaxy.name}</a><span class="divider">/</span></li>
+    <li><a href="@{Sites.index(galaxy.id)}">Sites</a><span class="divider">:</span></li>
+    <li><a href="@{Sites.read(galaxy.id, site.id)}">${site.name}</a><span class="divider">/</span></li>
+    <li><a href="@{Categories.index(galaxy.id,site.id)}">Categories</a><span class="divider">:</span></li>
+    <li>Add</li>
+</ul>
 
 #{if category == null}
 
-<h1>New root category</h1>
-#{form action:@Categories.createPost(galaxy.id, site.id)}
-<p>Galaxy: ${galaxy.name}</p>
-<p>Site: ${site.name}</p>
-<p>Name: <input type="text" name="name"/></p>
-<p><input type="submit" value="Create"/></p>
-#{/form}
+#{bsForm action:@Categories.createPost(galaxy.id, site.id), actionText:'Add Root Category'}
+#{bsInfo name:'galaxy', desc:'Galaxy', info:galaxy.name /}
+#{bsInfo name:'site', desc:'Site', info:site.name /}
+#{bsInputText name:'name',desc:'Name' /}
+#{bsTextArea name:'description',desc:'Description' /}
+#{/bsForm}
 
 #{/if}
 #{else}
 
-<h1>New category</h1>
-#{form action:@Categories.createPost(galaxy.id, site.id, category.id)}
-<p>Galaxy: ${galaxy.name}</p>
-<p>Site: ${site.name}</p>
-<p>Parent category: ${category.name}</p>
-<p>Name: <input type="text" name="name"/></p>
-<p><input type="submit" value="Create"/></p>
-#{/form}
+#{bsForm action:@Categories.createPost(galaxy.id, site.id, category.id), actionText:'Add Category'}
+#{bsInfo name:'galaxy', desc:'Galaxy', info:galaxy.name /}
+#{bsInfo name:'site', desc:'Site', info:site.name /}
+#{bsInfo name:'parent', desc:'Parent category', info:category.name /}
+#{bsInputText name:'name',desc:'Name' /}
+#{bsTextArea name:'description',desc:'Description' /}
+#{/bsForm}
 
 #{/else}
 

@@ -44,6 +44,7 @@ public class Categories extends AuthController {
     }
     
     public static void createPost(Long galaxyId, Long siteId, Long categoryId, String name, String description) {
+        // Path check
         Galaxy galaxy = Galaxy.findById(galaxyId);
         if(galaxy == null) {
             notFound();
@@ -59,6 +60,16 @@ public class Categories extends AuthController {
                 notFound();
             }
         }
+        // Params check
+        checkAuthenticity();
+        validation.required(name);
+        validation.minSize(name, 4);
+        if (validation.hasErrors()) {
+            params.flash();
+            validation.keep();
+            create(galaxyId, siteId, categoryId);
+        }
+        // Action
         Category category = new Category(site, parent, name, description);
         category.save();
         if(categoryId == null) {

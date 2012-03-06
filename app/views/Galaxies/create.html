@@ -1,12 +1,11 @@
 #{extends 'main.html' /}
-#{set title:'New galaxy' /}
+#{set title:'Add galaxy' /}
 
 <ul class="breadcrumb">
     <li><a href="@{Galaxies.index()}">Galaxies</a><span class="divider">:</span></li>
-    <li>Create</li>
+    <li>Add</li>
 </ul>
 
-#{form action:@Galaxies.createPost()}
-<p>Name: <input type="text" name="name"/></p>
-<p><input type="submit" value="Create"/></p>
-#{/form}
+#{bsForm action:@Galaxies.createPost(), actionText:'Add Galaxy'}
+#{bsInputText name:'name',desc:'Name' /}
+#{/bsForm}

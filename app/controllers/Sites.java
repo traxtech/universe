@@ -28,10 +28,21 @@ public class Sites extends AuthController {
     }
 
     public static void createPost(Long galaxyId, String domain, String name) {
+        // Path check
         Galaxy galaxy = Galaxy.findById(galaxyId);
         if (galaxy == null) {
             notFound();
         }
+        // Params check
+        checkAuthenticity();
+        validation.required(name);
+        validation.minSize(name, 4);
+        if (validation.hasErrors()) {
+            params.flash();
+            validation.keep();
+            create(galaxyId);
+        }        
+        // Action
         Site site = new Site(galaxy, domain, name);
         site.save();
         index(galaxyId);

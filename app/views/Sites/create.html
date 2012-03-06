@@ -1,16 +1,15 @@
 #{extends 'main.html' /}
-#{set title:'New Site' /}
+#{set title:'Add Site' /}
 
 <ul class="breadcrumb">
     <li><a href="@{Galaxies.index()}">Galaxies</a><span class="divider">:</span></li>
     <li><a href="@{Galaxies.read(galaxy.id)}">${galaxy.name}</a><span class="divider">/</span></li>
     <li><a href="@{Sites.index(galaxy.id)}">Sites</a><span class="divider">:</span></li>
-    <li>Create</li>
+    <li>Add</li>
 </ul>
 
-#{form action:@Sites.createPost(galaxy.id)}
-<p>Galaxy: ${galaxy.name}</p>
-<p>Domain: <input type="text" name="domain"/></p>
-<p>Name: <input type="text" name="name"/></p>
-<p><input type="submit" value="Create"/></p>
-#{/form}
+#{bsForm action:@Sites.createPost(galaxy.id), actionText:'Add Site'}
+#{bsInfo name:'galaxy', desc:'Galaxy', info:galaxy.name /}
+#{bsInputText name:'name',desc:'Name' /}
+#{bsInputText name:'domain',desc:'Domain' /}
+#{/bsForm}
