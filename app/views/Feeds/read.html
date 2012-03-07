@@ -1,0 +1,11 @@
+#{extends 'main.html' /}
+#{set title:feed.name /}
+
+<ul class="breadcrumb">
+    <li><a href="@{Feeds.index()}">Feeds</a><span class="divider">:</span></li>
+    <li>${feed.name}</li>
+</ul>
+
+#{list items:entries,as:'entry'}
+${entry.content.raw()}
+#{/list}

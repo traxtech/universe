@@ -20,6 +20,7 @@ package controllers;
 
 import java.util.List;
 import models.Feed;
+import models.FeedEntry;
 
 /**
  * Feeds management.
@@ -48,6 +49,15 @@ public class Feeds extends AuthController {
         Feed feed = new Feed(name, url);
         feed.save();
         index();
+    }
+    
+    public static void read(Long feedId) {
+        Feed feed = Feed.findById(feedId);
+        if(feed == null) {
+            notFound();
+        }
+        List<FeedEntry> entries = FeedEntry.findByFeed(feed);
+        render(feed, entries);
     }
 
 }

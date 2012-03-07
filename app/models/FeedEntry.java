@@ -18,7 +18,16 @@
  */
 package models;
 
+import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.Query;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import play.db.jpa.JPA;
 import play.db.jpa.Model;
 
 /**
@@ -27,5 +36,37 @@ import play.db.jpa.Model;
  */
 @Entity
 public class FeedEntry extends Model {
-    
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    public Feed feed;
+    public String uri;
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date when;
+    public String title;
+    @Lob
+    public String content;
+    public boolean active;
+
+    public FeedEntry(Feed feed, String uri, Date when, String title, String content) {
+        this.feed = feed;
+        this.uri = uri.toLowerCase();
+        this.when = when;
+        this.title = title;
+        this.content = content;
+        this.active = true;
+    }
+
+    public FeedEntry() {
+    }
+
+    public static boolean existsUri(String uri) {
+        Query q = JPA.em().createQuery("SELECT COUNT(id) FROM FeedEntry WHERE uri = :uri");
+        q.setParameter("uri", uri.toLowerCase());
+        return (Long) q.getSingleResult() > 0;
+    }
+
+    public static List<FeedEntry> findByFeed(Feed feed) {
+        return find("feed = ? AND active = TRUE", feed).fetch();
+    }
 }

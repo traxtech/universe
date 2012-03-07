@@ -22,6 +22,11 @@ GET     /g/{galaxyId}/s/{siteId}/c/{categoryId}/p/create                        
 POST    /g/{galaxyId}/s/{siteId}/c/{categoryId}/p/create                        Pages.createPost
 GET     /g/{galaxyId}/s/{siteId}/c/{categoryId}/p/{pageId}                      Pages.read
 
+GET     /f                                                                      Feeds.index
+GET     /f/create                                                               Feeds.create
+POST    /f/create                                                               Feeds.createPost
+GET     /f/{feedId}                                                             Feeds.read
+
 # Home page
 GET     /                                                                       Application.site
 GET     /c/{categoryId}                                                         Application.category

@@ -2,7 +2,7 @@
 #{set title:'Feeds' /}
 
 <ul class="breadcrumb">
-    <li>Galaxies</li>
+    <li>Feeds</li>
 </ul>
 
 <div class="row">
@@ -16,7 +16,7 @@
             <tbody>
                 #{list items:feeds,as:'feed'}
                 <tr>
-                    <td><a href="#">${feed.name}</a></td>
+                    <td><a href="@{Feeds.read(feed.id)}">${feed.name}</a></td>
                 </tr>
                 #{/list}
             </tbody>
