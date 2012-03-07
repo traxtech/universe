@@ -2,6 +2,8 @@
 #{set title:'Feeds' /}
 
 <ul class="breadcrumb">
+    <li><a href="@{Galaxies.index()}">Galaxies</a><span class="divider">:</span></li>
+    <li><a href="@{Galaxies.read(galaxy.id)}">${galaxy.name}</a><span class="divider">/</span></li>
     <li>Feeds</li>
 </ul>
 
@@ -16,13 +18,13 @@
             <tbody>
                 #{list items:feeds,as:'feed'}
                 <tr>
-                    <td><a href="@{Feeds.read(feed.id)}">${feed.name}</a></td>
+                    <td><a href="@{Feeds.read(galaxy.id,feed.id)}">${feed.name}</a></td>
                 </tr>
                 #{/list}
             </tbody>
         </table>
     </div>
     <div class="span4">
-        <a class="btn" href="@{Feeds.create()}">Add Feed</a>
+        <a class="btn" href="@{Feeds.create(galaxy.id)}">Add Feed</a>
     </div>
 </div>

@@ -18,7 +18,10 @@
  */
 package models;
 
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import play.db.jpa.Model;
 
 /**
@@ -28,14 +31,22 @@ import play.db.jpa.Model;
 @Entity
 public class Feed extends Model {
 
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    public Galaxy galaxy;
     public String name;
     public String url;
 
-    public Feed(String name, String url) {
+    public Feed(Galaxy galaxy, String name, String url) {
+        this.galaxy = galaxy;
         this.name = name;
         this.url = url;
     }
 
     public Feed() {
+    }
+    
+    public static List<Feed> findByGalaxy(Galaxy galaxy) {
+        return find("galaxy = ? ORDER BY name", galaxy).fetch();
     }
 }

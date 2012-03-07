@@ -2,7 +2,9 @@
 #{set title:feed.name /}
 
 <ul class="breadcrumb">
-    <li><a href="@{Feeds.index()}">Feeds</a><span class="divider">:</span></li>
+    <li><a href="@{Galaxies.index()}">Galaxies</a><span class="divider">:</span></li>
+    <li><a href="@{Galaxies.read(galaxy.id)}">${galaxy.name}</a><span class="divider">/</span></li>
+    <li><a href="@{Feeds.index(galaxy.id)}">Feeds</a><span class="divider">:</span></li>
     <li>${feed.name}</li>
 </ul>
 
@@ -14,7 +16,7 @@
             <p style="text-align: justify">${entry.textContent}</p>
         </div>
         <div class="span2">
-            <a class="btn" href="javascript:hide('@{FeedEntries.hideAjax(feed.id,entry.id)}', 'row${entry.id}')">Hide</a>
+            <a class="btn" href="javascript:hide('@{FeedEntries.hideAjax(galaxy.id, feed.id,entry.id)}', 'row${entry.id}')">Hide</a>
         </div>
     </div>
     <hr/>

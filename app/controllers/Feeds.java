@@ -21,6 +21,7 @@ package controllers;
 import java.util.List;
 import models.Feed;
 import models.FeedEntry;
+import models.Galaxy;
 
 /**
  * Feeds management.
@@ -28,35 +29,60 @@ import models.FeedEntry;
  */
 public class Feeds extends AuthController {
     
-    public static void index() {
-        List<Feed> feeds = Feed.findAll();
-        render(feeds);
+    public static void index(Long galaxyId) {
+        // Path check
+        Galaxy galaxy = Galaxy.findById(galaxyId);
+        if (galaxy == null) {
+            notFound();
+        }
+        // Action
+        List<Feed> feeds = Feed.findByGalaxy(galaxy);
+        render(galaxy, feeds);
     }
     
-    public static void create() {
-        render();
+    public static void create(Long galaxyId) {
+        // Path check
+        Galaxy galaxy = Galaxy.findById(galaxyId);
+        if (galaxy == null) {
+            notFound();
+        }
+        // Action
+        render(galaxy);
     }
 
-    public static void createPost(String name, String url) {
+    public static void createPost(Long galaxyId, String name, String url) {
+        // Path check
+        Galaxy galaxy = Galaxy.findById(galaxyId);
+        if (galaxy == null) {
+            notFound();
+        }        
+        // Parameter check
         validation.required(name);
         validation.minSize(name, 4);
         validation.required(url);
         if (validation.hasErrors()) {
             params.flash();
             validation.keep();
-            create();
+            create(galaxyId);
         }
-        Feed feed = new Feed(name, url);
+        // Action
+        Feed feed = new Feed(galaxy, name, url);
         feed.save();
-        index();
+        index(galaxyId);
     }
     
-    public static void read(Long feedId) {
+    public static void read(Long galaxyId, Long feedId) {
+        // Path check
+        Galaxy galaxy = Galaxy.findById(galaxyId);
+        if (galaxy == null) {
+            notFound();
+        }        
         Feed feed = Feed.findById(feedId);
         if(feed == null) {
             notFound();
         }
+        // Action
         List<FeedEntry> entries = FeedEntry.findByFeed(feed);
-        render(feed, entries);
+        render(galaxy, feed, entries);
     }
 }

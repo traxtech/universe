@@ -40,6 +40,9 @@ public class FeedEntry extends Model {
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    public Galaxy galaxy;
+    @ManyToOne
+    @JoinColumn(nullable = false)
     public Feed feed;
     public String uri;
     @Temporal(TemporalType.TIMESTAMP)
@@ -52,6 +55,7 @@ public class FeedEntry extends Model {
     public boolean visible;
 
     public FeedEntry(Feed feed, String uri, Date when, String title, String htmlContent, String textContent) {
+        this.galaxy = feed.galaxy;
         this.feed = feed;
         this.uri = uri.toLowerCase();
         this.when = when;

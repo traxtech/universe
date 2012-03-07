@@ -22,10 +22,10 @@ GET     /g/{galaxyId}/s/{siteId}/c/{categoryId}/p/create                        
 POST    /g/{galaxyId}/s/{siteId}/c/{categoryId}/p/create                        Pages.createPost
 GET     /g/{galaxyId}/s/{siteId}/c/{categoryId}/p/{pageId}                      Pages.read
 
-GET     /f                                                                      Feeds.index
-GET     /f/create                                                               Feeds.create
-POST    /f/create                                                               Feeds.createPost
-GET     /f/{feedId}                                                             Feeds.read
+GET     /g/{galaxyId}/f                                                         Feeds.index
+GET     /g/{galaxyId}/f/create                                                  Feeds.create
+POST    /g/{galaxyId}/f/create                                                  Feeds.createPost
+GET     /g/{galaxyId}/f/{feedId}                                                Feeds.read
 
 # Home page
 GET     /                                                                       Application.site

@@ -20,6 +20,7 @@ package controllers;
 
 import models.Feed;
 import models.FeedEntry;
+import models.Galaxy;
 
 /**
  *
@@ -27,7 +28,12 @@ import models.FeedEntry;
  */
 public class FeedEntries extends AuthController {
 
-    public static void hideAjax(Long feedId, Long feedEntryId) {
+    public static void hideAjax(Long galaxyId, Long feedId, Long feedEntryId) {
+        // Path check
+        Galaxy galaxy = Galaxy.findById(galaxyId);
+        if(galaxy == null) {
+            notFound();
+        }
         Feed feed = Feed.findById(feedId);
         if(feed == null) {
             notFound();
@@ -36,6 +42,7 @@ public class FeedEntries extends AuthController {
         if (entry == null || !entry.feed.equals(feed)) {
             notFound();
         }
+        // Action
         entry.visible = false;
         entry.save();
         ok();
