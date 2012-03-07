@@ -1,0 +1,12 @@
+#{extends 'main.html' /}
+#{set title:'Add Feed' /}
+
+<ul class="breadcrumb">
+    <li><a href="@{Feeds.index()}">Feeds</a><span class="divider">:</span></li>
+    <li>Add</li>
+</ul>
+
+#{bsForm action:@Feeds.createPost(), actionText:'Add Feed'}
+#{bsInputText name:'name',desc:'Name' /}
+#{bsInputText name:'url',desc:'URL' /}
+#{/bsForm}

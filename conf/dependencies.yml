@@ -4,5 +4,6 @@ require:
     - play
     - com.madgag -> markdownj-core 0.4.1
     - postgresql -> postgresql 9.0-801.jdbc4
+    - org.rometools -> rome-modules 1.0
     - org.jasypt -> jasypt 1.8:
         transitive: false
