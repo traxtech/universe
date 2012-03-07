@@ -18,45 +18,26 @@
  */
 package controllers;
 
-import java.util.List;
 import models.Feed;
 import models.FeedEntry;
 
 /**
- * Feeds management.
- * @author Arnaud Rolly
+ *
+ * @author arnaud
  */
-public class Feeds extends AuthController {
-    
-    public static void index() {
-        List<Feed> feeds = Feed.findAll();
-        render(feeds);
-    }
-    
-    public static void create() {
-        render();
-    }
+public class FeedEntries extends AuthController {
 
-    public static void createPost(String name, String url) {
-        validation.required(name);
-        validation.minSize(name, 4);
-        validation.required(url);
-        if (validation.hasErrors()) {
-            params.flash();
-            validation.keep();
-            create();
-        }
-        Feed feed = new Feed(name, url);
-        feed.save();
-        index();
-    }
-    
-    public static void read(Long feedId) {
+    public static void hideAjax(Long feedId, Long feedEntryId) {
         Feed feed = Feed.findById(feedId);
         if(feed == null) {
             notFound();
         }
-        List<FeedEntry> entries = FeedEntry.findByFeed(feed);
-        render(feed, entries);
+        FeedEntry entry = FeedEntry.findById(feedEntryId);
+        if (entry == null || !entry.feed.equals(feed)) {
+            notFound();
+        }
+        entry.visible = false;
+        entry.save();
+        ok();
     }
 }

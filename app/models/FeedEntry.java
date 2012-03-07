@@ -49,7 +49,7 @@ public class FeedEntry extends Model {
     public String htmlContent;
     @Lob
     public String textContent;
-    public boolean active;
+    public boolean visible;
 
     public FeedEntry(Feed feed, String uri, Date when, String title, String htmlContent, String textContent) {
         this.feed = feed;
@@ -61,7 +61,7 @@ public class FeedEntry extends Model {
         if((textContent == null || textContent.isEmpty()) && htmlContent != null && !htmlContent.isEmpty()) {
             this.textContent = Jsoup.parse(htmlContent).text();
         }
-        this.active = true;
+        this.visible = true;
     }
 
     public FeedEntry() {
@@ -74,6 +74,6 @@ public class FeedEntry extends Model {
     }
 
     public static List<FeedEntry> findByFeed(Feed feed) {
-        return find("feed = ? AND active = TRUE", feed).fetch();
+        return find("feed = ? AND visible = TRUE", feed).fetch();
     }
 }

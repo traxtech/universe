@@ -7,14 +7,24 @@
 </ul>
 
 #{list items:entries,as:'entry'}
-<div class="row">
-    <div class="span10">
-        <h3><a href="${entry.uri}">${entry.title}</a></h3>
-        <p style="text-align: justify">${entry.textContent}</p>
+<div id="row${entry.id}">
+    <div class="row">
+        <div class="span10">
+            <h3><a href="${entry.uri}">${entry.title}</a></h3>
+            <p style="text-align: justify">${entry.textContent}</p>
+        </div>
+        <div class="span2">
+            <a class="btn" href="javascript:hide('@{FeedEntries.hideAjax(feed.id,entry.id)}', 'row${entry.id}')">Hide</a>
+        </div>
     </div>
-    <div class="span2">
-        <a class="btn" href="#">Deactivate</a>
-    </div>
+    <hr/>
 </div>
-<hr/>
 #{/list}
+
+<script type="text/javascript">
+    function hide(url, hideId) {
+        $.get(url, function (data){
+            $('#' + hideId).hide();
+        });
+    }
+</script>
