@@ -27,6 +27,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Query;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.jsoup.Jsoup;
 import play.db.jpa.JPA;
 import play.db.jpa.Model;
 
@@ -45,15 +46,21 @@ public class FeedEntry extends Model {
     public Date when;
     public String title;
     @Lob
-    public String content;
+    public String htmlContent;
+    @Lob
+    public String textContent;
     public boolean active;
 
-    public FeedEntry(Feed feed, String uri, Date when, String title, String content) {
+    public FeedEntry(Feed feed, String uri, Date when, String title, String htmlContent, String textContent) {
         this.feed = feed;
         this.uri = uri.toLowerCase();
         this.when = when;
         this.title = title;
-        this.content = content;
+        this.htmlContent = htmlContent;
+        this.textContent = textContent;
+        if((textContent == null || textContent.isEmpty()) && htmlContent != null && !htmlContent.isEmpty()) {
+            this.textContent = Jsoup.parse(htmlContent).text();
+        }
         this.active = true;
     }
 

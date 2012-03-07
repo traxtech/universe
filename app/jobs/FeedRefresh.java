@@ -51,14 +51,16 @@ public class FeedRefresh extends Job {
         for(SyndEntry entry : (List<SyndEntry>)feeed.getEntries()) {
             String uri = entry.getUri();
             if (!FeedEntry.existsUri(uri)) {
-                StringBuilder sb = new StringBuilder();
+                StringBuilder sbHtml = new StringBuilder();
+                StringBuilder sbText = new StringBuilder();
                 for(SyndContent content : (List<SyndContent>)entry.getContents()) {
-                    sb.append(content.getType());
-                    sb.append(":");
-                    sb.append(content.getValue());
-                    sb.append("<hr/>");
+                    if("html".equals(content.getType())) {
+                        sbHtml.append(content.getValue());
+                    } else if ("text".equals(content.getType())) {
+                        sbText.append(content.getValue());
+                    }
                 }
-                FeedEntry feedEntry = new FeedEntry(feed, uri, entry.getPublishedDate(), entry.getTitle(), sb.toString());
+                FeedEntry feedEntry = new FeedEntry(feed, uri, entry.getPublishedDate(), entry.getTitle(), sbHtml.toString(), sbText.toString());
                 feedEntry.save();
             }
         }
