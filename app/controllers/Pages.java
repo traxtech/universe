@@ -29,54 +29,31 @@ import models.Site;
  * @author Arnaud Rolly
  */
 public class Pages extends AuthController {
-    
+
     public static void index(Long galaxyId, Long siteId, Long categoryId) {
-        Galaxy galaxy = Galaxy.findById(galaxyId);
-        if(galaxy == null) {
-            notFound();
-        }
-        Site site = Site.findById(siteId);
-        if(site == null || !site.galaxy.equals(galaxy)) {
-            notFound();
-        }
-        Category category = Category.findById(categoryId);
-        if(category == null || !category.site.equals(site)) {
-            notFound();
-        }
+        // Path check
+        Galaxy galaxy = getGalaxy(galaxyId);
+        Site site = getSite(galaxy, siteId);
+        Category category = getCategory(site, categoryId);
+        // Action
         List<Page> pages = Page.findByCategory(category);
         render(galaxy, site, category, pages);
     }
-    
+
     public static void create(Long galaxyId, Long siteId, Long categoryId) {
-        Galaxy galaxy = Galaxy.findById(galaxyId);
-        if(galaxy == null) {
-            notFound();
-        }
-        Site site = Site.findById(siteId);
-        if(site == null || !site.galaxy.equals(galaxy)) {
-            notFound();
-        }
-        Category category = Category.findById(categoryId);
-        if(category == null || !category.site.equals(site)) {
-            notFound();
-        }
+        // Path check
+        Galaxy galaxy = getGalaxy(galaxyId);
+        Site site = getSite(galaxy, siteId);
+        Category category = getCategory(site, categoryId);
+        // Action
         render(galaxy, site, category);
     }
-    
+
     public static void createPost(Long galaxyId, Long siteId, Long categoryId, String title, String excerpt, String content) {
         // Path check
-        Galaxy galaxy = Galaxy.findById(galaxyId);
-        if(galaxy == null) {
-            notFound();
-        }
-        Site site = Site.findById(siteId);
-        if(site == null || !site.galaxy.equals(galaxy)) {
-            notFound();
-        }
-        Category category = Category.findById(categoryId);
-        if(category == null || !category.site.equals(site)) {
-            notFound();
-        }
+        Galaxy galaxy = getGalaxy(galaxyId);
+        Site site = getSite(galaxy, siteId);
+        Category category = getCategory(site, categoryId);
         // Params check
         checkAuthenticity();
         validation.required(title);
@@ -95,24 +72,14 @@ public class Pages extends AuthController {
         page.save();
         index(galaxyId, siteId, categoryId);
     }
-    
+
     public static void read(Long galaxyId, Long siteId, Long categoryId, Long pageId) {
-        Galaxy galaxy = Galaxy.findById(galaxyId);
-        if(galaxy == null) {
-            notFound();
-        }
-        Site site = Site.findById(siteId);
-        if(site == null || !site.galaxy.equals(galaxy)) {
-            notFound();
-        }
-        Category category = Category.findById(categoryId);
-        if(category == null || !category.site.equals(site)) {
-            notFound();
-        }
-        Page page = Page.findById(pageId);
-        if(page == null || !page.category.equals(category)) {
-            notFound();
-        }
+        // Path check
+        Galaxy galaxy = getGalaxy(galaxyId);
+        Site site = getSite(galaxy, siteId);
+        Category category = getCategory(site, categoryId);
+        Page page = getPage(category, pageId);
+        // Action
         render(galaxy, site, category, page);
     }
 }

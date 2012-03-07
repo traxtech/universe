@@ -30,10 +30,7 @@ import models.Site;
 public class Categories extends AuthController {
     
     public static void index(Long galaxyId, Long siteId) {
-        Galaxy galaxy = Galaxy.findById(galaxyId);
-        if(galaxy == null) {
-            notFound();
-        }
+        Galaxy galaxy = getGalaxy(galaxyId);
         Site site = Site.findById(siteId);
         if(site == null || !site.galaxy.equals(galaxy)) {
             notFound();
@@ -47,10 +44,7 @@ public class Categories extends AuthController {
         if(galaxy == null) {
             notFound();
         }
-        Site site = Site.findById(siteId);
-        if(site == null || !site.galaxy.equals(galaxy)) {
-            notFound();
-        }
+        Site site = getSite(galaxy, siteId);
         Category category = null;
         if(categoryId != null) {
             category = Category.findById(categoryId);
@@ -60,14 +54,8 @@ public class Categories extends AuthController {
     
     public static void createPost(Long galaxyId, Long siteId, Long categoryId, String name, String description) {
         // Path check
-        Galaxy galaxy = Galaxy.findById(galaxyId);
-        if(galaxy == null) {
-            notFound();
-        }
-        Site site = Site.findById(siteId);
-        if(site == null || !site.galaxy.equals(galaxy)) {
-            notFound();
-        }
+        Galaxy galaxy = getGalaxy(galaxyId);
+        Site site = getSite(galaxy, siteId);
         Category parent = null;
         if(categoryId != null) {
             parent = Category.findById(categoryId);
@@ -95,19 +83,10 @@ public class Categories extends AuthController {
     }
     
     public static void read(Long galaxyId, Long siteId, Long categoryId) {
-        Galaxy galaxy = Galaxy.findById(galaxyId);
-        if(galaxy == null) {
-            notFound();
-        }
-        Site site = Site.findById(siteId);
-        if(site == null || !site.galaxy.equals(galaxy)) {
-            notFound();
-        }
-        Category category = Category.findById(categoryId);
-        if(category == null || !category.site.equals(site)) {
-            notFound();
-        }
-        List<Category> categories = Category.findChildren(category);
-        render(galaxy, site, category, categories);
+        Galaxy galaxy = getGalaxy(galaxyId);
+        Site site = getSite(galaxy, siteId);
+        Category category = getCategory(site, categoryId);
+        List<Category> children = Category.findChildren(category);
+        render(galaxy, site, category, children);
     }
 }

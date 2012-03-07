@@ -30,18 +30,9 @@ public class FeedEntries extends AuthController {
 
     public static void hideAjax(Long galaxyId, Long feedId, Long feedEntryId) {
         // Path check
-        Galaxy galaxy = Galaxy.findById(galaxyId);
-        if(galaxy == null) {
-            notFound();
-        }
-        Feed feed = Feed.findById(feedId);
-        if(feed == null) {
-            notFound();
-        }
-        FeedEntry entry = FeedEntry.findById(feedEntryId);
-        if (entry == null || !entry.feed.equals(feed)) {
-            notFound();
-        }
+        Galaxy galaxy = getGalaxy(galaxyId);
+        Feed feed = getFeed(galaxy, feedId);
+        FeedEntry entry = getFeedEntry(feed, feedEntryId);
         // Action
         entry.visible = false;
         entry.save();

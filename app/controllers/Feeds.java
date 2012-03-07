@@ -28,34 +28,25 @@ import models.Galaxy;
  * @author Arnaud Rolly
  */
 public class Feeds extends AuthController {
-    
+
     public static void index(Long galaxyId) {
         // Path check
-        Galaxy galaxy = Galaxy.findById(galaxyId);
-        if (galaxy == null) {
-            notFound();
-        }
+        Galaxy galaxy = getGalaxy(galaxyId);
         // Action
         List<Feed> feeds = Feed.findByGalaxy(galaxy);
         render(galaxy, feeds);
     }
-    
+
     public static void create(Long galaxyId) {
         // Path check
-        Galaxy galaxy = Galaxy.findById(galaxyId);
-        if (galaxy == null) {
-            notFound();
-        }
+        Galaxy galaxy = getGalaxy(galaxyId);
         // Action
         render(galaxy);
     }
 
     public static void createPost(Long galaxyId, String name, String url) {
         // Path check
-        Galaxy galaxy = Galaxy.findById(galaxyId);
-        if (galaxy == null) {
-            notFound();
-        }        
+        Galaxy galaxy = getGalaxy(galaxyId);
         // Parameter check
         validation.required(name);
         validation.minSize(name, 4);
@@ -70,17 +61,11 @@ public class Feeds extends AuthController {
         feed.save();
         index(galaxyId);
     }
-    
+
     public static void read(Long galaxyId, Long feedId) {
         // Path check
-        Galaxy galaxy = Galaxy.findById(galaxyId);
-        if (galaxy == null) {
-            notFound();
-        }        
-        Feed feed = Feed.findById(feedId);
-        if(feed == null) {
-            notFound();
-        }
+        Galaxy galaxy = getGalaxy(galaxyId);
+        Feed feed = getFeed(galaxy, feedId);
         // Action
         List<FeedEntry> entries = FeedEntry.findByFeed(feed);
         render(galaxy, feed, entries);

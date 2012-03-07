@@ -21,9 +21,9 @@ ${category.description}
                 </tr>
             </thead>
             <tbody>
-                #{list items:categories,as:'subcategory'}
+                #{list items:children,as:'child'}
                 <tr>
-                    <td><a href="@{Categories.read(galaxy.id, site.id, subcategory.id)}">${subcategory.name}</a></td>
+                    <td><a href="@{Categories.read(galaxy.id, site.id, child.id)}">${child.name}</a></td>
                 </tr>
                 #{/list}
             </tbody>

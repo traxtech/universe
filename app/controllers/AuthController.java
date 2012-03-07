@@ -19,6 +19,12 @@
 package controllers;
 
 import models.Account;
+import models.Category;
+import models.Feed;
+import models.FeedEntry;
+import models.Galaxy;
+import models.Page;
+import models.Site;
 import play.mvc.Before;
 import play.mvc.Controller;
 
@@ -29,9 +35,8 @@ import play.mvc.Controller;
 public class AuthController extends Controller {
 
     public static final String SESSION_ACCESS_KEY = "access";
-
     private static final String RARGS_ACCOUNT_KEY = "account";
-    
+
     @Before
     public static void checkAuth() {
         String access = session.get(SESSION_ACCESS_KEY);
@@ -44,8 +49,56 @@ public class AuthController extends Controller {
         }
         renderArgs.put(RARGS_ACCOUNT_KEY, account);
     }
-    
+
     protected static Account getAccount() {
         return renderArgs.get(RARGS_ACCOUNT_KEY, Account.class);
+    }
+
+    protected static Galaxy getGalaxy(Long galaxyId) {
+        Galaxy galaxy = Galaxy.findById(galaxyId);
+        if (galaxy == null) {
+            notFound();
+        }
+        return galaxy;
+    }
+
+    protected static Feed getFeed(Galaxy galaxy, Long feedId) {
+        Feed feed = Feed.findById(feedId);
+        if (feed == null || !feed.galaxy.equals(galaxy)) {
+            notFound();
+        }
+        return feed;
+    }
+
+    protected static FeedEntry getFeedEntry(Feed feed, Long feedEntryId) {
+        FeedEntry feedEntry = FeedEntry.findById(feedEntryId);
+        if (feedEntry == null || !feedEntry.feed.equals(feed)) {
+            notFound();
+        }
+        return feedEntry;
+    }
+
+    protected static Site getSite(Galaxy galaxy, Long siteId) {
+        Site site = Site.findById(siteId);
+        if (site == null || !site.galaxy.equals(galaxy)) {
+            notFound();
+        }
+        return site;
+    }
+
+    protected static Category getCategory(Site site, Long categoryId) {
+        Category category = Category.findById(categoryId);
+        if (category == null || !category.site.equals(site)) {
+            notFound();
+        }
+        return category;
+    }
+
+    protected static Page getPage(Category category, Long pageId) {
+        Page page = Page.findById(pageId);
+        if (page == null || !page.category.equals(category)) {
+            notFound();
+        }
+        return page;
     }
 }

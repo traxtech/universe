@@ -53,10 +53,7 @@ public class Galaxies extends AuthController {
     }
     
     public static void read(Long galaxyId) {
-        Galaxy galaxy = Galaxy.findById(galaxyId);
-        if(galaxy == null) {
-            notFound();
-        }
+        Galaxy galaxy = getGalaxy(galaxyId);
         render(galaxy);
     }
 }
