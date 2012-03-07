@@ -13,13 +13,13 @@ import play.mvc.Controller;
  */
 public class AuthController extends Controller {
 
-    public static final String SESSION_CLEF_ACCESS = "access";
+    public static final String SESSION_ACCESS_KEY = "access";
 
-    private static final String RARGS_KEY_ACCOUNT = "account";
+    private static final String RARGS_ACCOUNT_KEY = "account";
     
     @Before
     public static void checkAuth() {
-        String access = session.get(SESSION_CLEF_ACCESS);
+        String access = session.get(SESSION_ACCESS_KEY);
         if (access == null) {
             Application.login();
         }
@@ -27,10 +27,10 @@ public class AuthController extends Controller {
         if (account == null) {
             Application.login();
         }
-        renderArgs.put(RARGS_KEY_ACCOUNT, account);
+        renderArgs.put(RARGS_ACCOUNT_KEY, account);
     }
     
     protected static Account getAccount() {
-        return renderArgs.get(RARGS_KEY_ACCOUNT, Account.class);
+        return renderArgs.get(RARGS_ACCOUNT_KEY, Account.class);
     }
 }

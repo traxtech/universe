@@ -74,7 +74,12 @@ public class Application extends Controller {
             validation.keep();
             login();
         }
-        session.put(AuthController.SESSION_CLEF_ACCESS, account.access);
+        session.put(AuthController.SESSION_ACCESS_KEY, account.access);
         Galaxies.index();
+    }
+    
+    public static void logout() {
+        session.remove(AuthController.SESSION_ACCESS_KEY);
+        Application.login();
     }
 }
