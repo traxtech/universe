@@ -34,6 +34,10 @@ public class Account extends Model {
         return PWD_ENC.checkPassword(plainPassword, password);
     }
     
+    public void setPlainPassword(String plainPassword) {
+        this.password = PWD_ENC.encryptPassword(plainPassword);
+    }
+    
     public static Account findByAccess(String access) {
         return Account.find("access = ?", access).first();
     }

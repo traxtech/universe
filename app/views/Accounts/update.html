@@ -1,0 +1,13 @@
+#{extends 'main.html' /}
+#{set title:'Update account' /}
+
+<ul class="breadcrumb">
+    <li><a href="@{Accounts.index()}">My Account</a><span class="divider">:</span></li>
+    <li>Change Password</li>
+</ul>
+
+#{bsForm action:@Accounts.updatePost(), actionText:'Change password'}
+#{bsInputPassword name:'oldPassword',desc:'Current password' /}
+#{bsInputPassword name:'newPassword',desc:'New password' /}
+#{bsInputPassword name:'confirmation',desc:'Confirmation' /}
+#{/bsForm}

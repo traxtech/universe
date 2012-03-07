@@ -1,0 +1,15 @@
+#{extends 'main.html' /}
+#{set title:'My Account' /}
+
+<ul class="breadcrumb">
+    <li>My account</li>
+</ul>
+
+<div class="row">
+    <div class="span8">
+        #{info label:'Login',value:account.login /}
+    </div>
+    <div class="span4">
+        <a class="btn" href="@{Accounts.update()}">Change Password</a>
+    </div>
+</div>
