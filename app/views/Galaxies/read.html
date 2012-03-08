@@ -6,6 +6,9 @@
     <li>${galaxy.name}</li>
 </ul>
 
+<div class="btn-group">
+   <a class="btn" href="@{Sites.index(galaxy.id)}">Manage Sites</a>
+   <a class="btn" href="@{Feeds.index(galaxy.id)}">Manage Feeds</a>
+</div>
+
 <h1>${galaxy.name}</h1>
-<p><a href="@{Sites.index(galaxy.id)}">Sites</a></p>
-<p><a href="@{Feeds.index(galaxy.id)}">Feeds</a></p>

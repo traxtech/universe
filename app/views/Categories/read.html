@@ -10,26 +10,23 @@
     <li>${category.name}</li>
 </ul>
 
-${category.description}
-<p><a href="@{Pages.index(galaxy.id,site.id,category.id)}">Pages</a></p>
-<div class="row">
-    <div class="span8">
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>Subcategory</th>
-                </tr>
-            </thead>
-            <tbody>
-                #{list items:children,as:'child'}
-                <tr>
-                    <td><a href="@{Categories.read(galaxy.id, site.id, child.id)}">${child.name}</a></td>
-                </tr>
-                #{/list}
-            </tbody>
-        </table>
-    </div>
-    <div class="span4">
-        <a class="btn" href="@{Categories.create(galaxy.id, site.id, category.id)}">Add Category</a>
-    </div>
+<div class="btn-group">
+    <a class="btn" href="@{Pages.index(galaxy.id,site.id,category.id)}">Manage Pages</a>
+    <a class="btn" href="@{Categories.create(galaxy.id, site.id, category.id)}">Add Category</a>
 </div>
+
+${category.description}
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Subcategory</th>
+        </tr>
+    </thead>
+    <tbody>
+        #{list items:children,as:'child'}
+        <tr>
+            <td><a href="@{Categories.read(galaxy.id, site.id, child.id)}">${child.name}</a></td>
+        </tr>
+        #{/list}
+    </tbody>
+</table>

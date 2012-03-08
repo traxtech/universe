@@ -12,15 +12,12 @@
     <li>${page.title}</li>
 </ul>
 
-<div class="row">
-    <div class="span10">
-        <h1>${page.title}</h1>
-        <hr/>
-        ${page.htmlExcerpt.raw()}
-        <hr/>
-        ${page.htmlContent.raw()}
-    </div>
-    <div class="span2">
-        <a class="btn" href="@{Pages.update(galaxy.id,site.id,category.id,page.id)}">Update</a>
-    </div>
+<div class="btn-group">
+    <a class="btn" href="@{Pages.update(galaxy.id,site.id,category.id,page.id)}">Update</a>
 </div>
+
+<h1>${page.title}</h1>
+<hr/>
+${page.htmlExcerpt.raw()}
+<hr/>
+${page.htmlContent.raw()}

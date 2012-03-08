@@ -11,24 +11,21 @@
     <li>Pages</li>
 </ul>
 
-<div class="row">
-    <div class="span8">
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                </tr>
-            </thead>
-            <tbody>
-                #{list items:pages,as:'page'}
-                <tr>
-                    <td><a href="@{Pages.read(galaxy.id,site.id,category.id,page.id)}">${page.title}</a></td>
-                </tr>
-                #{/list}
-            </tbody>
-        </table>
-    </div>
-    <div class="span4">
-        <a class="btn" href="@{Pages.create(galaxy.id,site.id,category.id)}">Add Page</a>
-    </div>
+<div class="btn-group">
+    <a class="btn" href="@{Pages.create(galaxy.id,site.id,category.id)}">Add Page</a>
 </div>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Title</th>
+        </tr>
+    </thead>
+    <tbody>
+        #{list items:pages,as:'page'}
+        <tr>
+            <td><a href="@{Pages.read(galaxy.id,site.id,category.id,page.id)}">${page.title}</a></td>
+        </tr>
+        #{/list}
+    </tbody>
+</table>

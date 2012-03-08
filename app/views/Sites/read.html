@@ -8,9 +8,11 @@
     <li>${site.name}</li>
 </ul>
 
+<div class="btn-group">
+    <a class="btn" href="@{Categories.index(galaxy.id,site.id)}">Manage Categories</a>
+</div>
+
 <h1>${site.name}</h1>
 #{info label:'Today hits', value:models.Hit.today(site) /}
 #{info label:'Google Analytics Account', value:site.analyticsAccount /}
 #{info label:'Google AdSense Reference', value:site.adSenseRef /}
-
-<p><a href="@{Categories.index(galaxy.id,site.id)}">Categories</a></p>
