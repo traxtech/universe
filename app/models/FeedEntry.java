@@ -46,7 +46,7 @@ public class FeedEntry extends Model {
     public Feed feed;
     public String uri;
     @Temporal(TemporalType.TIMESTAMP)
-    public Date when;
+    public Date created;
     public String title;
     @Lob
     public String htmlContent;
@@ -54,11 +54,11 @@ public class FeedEntry extends Model {
     public String textContent;
     public boolean visible;
 
-    public FeedEntry(Feed feed, String uri, Date when, String title, String htmlContent, String textContent) {
+    public FeedEntry(Feed feed, String uri, Date created, String title, String htmlContent, String textContent) {
         this.galaxy = feed.galaxy;
         this.feed = feed;
         this.uri = uri.toLowerCase();
-        this.when = when;
+        this.created = created;
         this.title = title;
         this.htmlContent = htmlContent;
         this.textContent = textContent;

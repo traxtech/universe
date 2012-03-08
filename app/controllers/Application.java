@@ -3,24 +3,25 @@
  * 
  * This file is part of Universe.
  *
- *   Universe is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
- *   (at your option) any later version.
+ * Universe is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- *   Universe is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU General Public License for more details.
+ * Universe is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *   You should have received a copy of the GNU General Public License
- *   along with Universe.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License
+ * along with Universe.  If not, see <http://www.gnu.org/licenses/>.
  */
 package controllers;
 
 import java.util.List;
 import models.Account;
 import models.Category;
+import models.Hit;
 import models.Page;
 import models.Site;
 import play.mvc.*;
@@ -41,14 +42,18 @@ public class Application extends Controller {
     
     public static void site() {
         Site site = getSite();
+        Hit hit = new Hit(site, request);
+        hit.save();
         List<Category> categories = Category.findRoot(site);
         render(site, categories);
     }
 
     public static void category(Long categoryId) {
         Site site = getSite();
-        List<Category> categories = Category.findRoot(site);
         Category category = Category.findById(categoryId);
+        Hit hit = new Hit(category, request);
+        hit.save();
+        List<Category> categories = Category.findRoot(site);
         if(category == null || !category.site.equals(site)) {
             site();
         }
@@ -57,8 +62,10 @@ public class Application extends Controller {
     
     public static void page(Long pageId) {
         Site site = getSite();
-        List<Category> categories = Category.findRoot(site);
         Page page = Page.findById(pageId);
+        Hit hit = new Hit(page, request);
+        hit.save();
+        List<Category> categories = Category.findRoot(site);
         if(page == null || !page.site.equals(site)) {
             site();
         }

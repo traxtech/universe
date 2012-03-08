@@ -33,6 +33,7 @@ GET     /c/{categoryId}                                                         
 GET     /p/{pageId}                                                             Application.page
 GET     /login                                                                  Application.login
 POST    /login                                                                  Application.loginPost
+GET     /logout                                                                 Application.logout
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
