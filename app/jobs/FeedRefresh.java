@@ -39,22 +39,22 @@ public class FeedRefresh extends Job {
 
     @Override
     public void doJob() throws Exception {
-        for(Feed feed : Feed.<Feed>findAll()) {
+        for (Feed feed : Feed.<Feed>findAll()) {
             updateFeed(feed);
         }
     }
-    
+
     private void updateFeed(Feed feed) throws Exception {
         URL feedUrl = new URL(feed.url);
         SyndFeedInput input = new SyndFeedInput();
         SyndFeed feeed = input.build(new XmlReader(feedUrl));
-        for(SyndEntry entry : (List<SyndEntry>)feeed.getEntries()) {
+        for (SyndEntry entry : (List<SyndEntry>) feeed.getEntries()) {
             String uri = entry.getUri();
             if (!FeedEntry.existsUri(uri)) {
                 StringBuilder sbHtml = new StringBuilder();
                 StringBuilder sbText = new StringBuilder();
-                for(SyndContent content : (List<SyndContent>)entry.getContents()) {
-                    if("html".equals(content.getType())) {
+                for (SyndContent content : (List<SyndContent>) entry.getContents()) {
+                    if ("html".equals(content.getType())) {
                         sbHtml.append(content.getValue());
                     } else if ("text".equals(content.getType())) {
                         sbText.append(content.getValue());

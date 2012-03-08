@@ -62,7 +62,7 @@ public class FeedEntry extends Model {
         this.title = title;
         this.htmlContent = htmlContent;
         this.textContent = textContent;
-        if((textContent == null || textContent.isEmpty()) && htmlContent != null && !htmlContent.isEmpty()) {
+        if ((textContent == null || textContent.isEmpty()) && htmlContent != null && !htmlContent.isEmpty()) {
             this.textContent = Jsoup.parse(htmlContent).text();
         }
         this.visible = true;

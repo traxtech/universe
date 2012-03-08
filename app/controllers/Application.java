@@ -34,12 +34,12 @@ public class Application extends Controller {
 
     private static Site getSite() {
         Site site = Site.findByDomain(request.host);
-        if(site == null) {
+        if (site == null) {
             notFound();
         }
         return site;
     }
-    
+
     public static void site() {
         Site site = getSite();
         Hit hit = new Hit(site, request);
@@ -54,28 +54,28 @@ public class Application extends Controller {
         Hit hit = new Hit(category, request);
         hit.save();
         List<Category> categories = Category.findRoot(site);
-        if(category == null || !category.site.equals(site)) {
+        if (category == null || !category.site.equals(site)) {
             site();
         }
         render(site, categories, category);
     }
-    
+
     public static void page(Long pageId) {
         Site site = getSite();
         Page page = Page.findById(pageId);
         Hit hit = new Hit(page, request);
         hit.save();
         List<Category> categories = Category.findRoot(site);
-        if(page == null || !page.site.equals(site)) {
+        if (page == null || !page.site.equals(site)) {
             site();
         }
         render(site, categories, page);
     }
-    
+
     public static void login() {
         render();
     }
-    
+
     public static void loginPost(String login, String plainPassword) {
         checkAuthenticity();
         validation.required(login);
@@ -95,7 +95,7 @@ public class Application extends Controller {
             validation.keep();
             login();
         }
-        if(!account.checkPassword(plainPassword)) {
+        if (!account.checkPassword(plainPassword)) {
             validation.addError("login", "Invalid login and/or password");
             validation.addError("plainPassword", "Invalid login and/or password");
             params.flash();
@@ -105,7 +105,7 @@ public class Application extends Controller {
         session.put(AuthController.SESSION_ACCESS_KEY, account.access);
         Galaxies.index();
     }
-    
+
     public static void logout() {
         session.remove(AuthController.SESSION_ACCESS_KEY);
         Application.login();

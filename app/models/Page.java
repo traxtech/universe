@@ -23,7 +23,6 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -47,13 +46,13 @@ public class Page extends Model {
     @Temporal(TemporalType.TIMESTAMP)
     public Date updated;
     public String title;
-    @Column(columnDefinition="TEXT")
+    @Column(columnDefinition = "TEXT")
     public String excerpt;
-    @Column(columnDefinition="TEXT")
+    @Column(columnDefinition = "TEXT")
     public String htmlExcerpt;
-    @Column(columnDefinition="TEXT")
+    @Column(columnDefinition = "TEXT")
     public String content;
-    @Column(columnDefinition="TEXT")
+    @Column(columnDefinition = "TEXT")
     public String htmlContent;
 
     public Page(Category category, String title, String excerpt, String content) {

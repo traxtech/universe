@@ -54,7 +54,7 @@ public class Hit extends Model {
     public String path;
     public String referer;
     public String userAgent;
-    
+
     public Hit(Site site, Request request) {
         this.galaxy = site.galaxy;
         this.site = site;
@@ -83,7 +83,7 @@ public class Hit extends Model {
 
     public Hit() {
     }
-    
+
     public static Long today(Site site) {
         Query q = JPA.em().createQuery("SELECT COUNT(id) FROM Hit WHERE site = :site AND created > :startCount");
         q.setParameter("site", site);
@@ -93,6 +93,6 @@ public class Hit extends Model {
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
         q.setParameter("startCount", cal.getTime());
-        return (Long)q.getSingleResult();
+        return (Long) q.getSingleResult();
     }
 }

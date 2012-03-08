@@ -56,7 +56,7 @@ public class Sites extends AuthController {
             params.flash();
             validation.keep();
             create(galaxyId);
-        }        
+        }
         // Action
         Site site = new Site(galaxy, domain, name, analyticsAccount, adSenseRef);
         site.save();

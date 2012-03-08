@@ -45,7 +45,7 @@ public class Feed extends Model {
 
     public Feed() {
     }
-    
+
     public static List<Feed> findByGalaxy(Galaxy galaxy) {
         return find("galaxy = ? ORDER BY name", galaxy).fetch();
     }
