@@ -42,7 +42,7 @@ public class Sites extends AuthController {
         render(galaxy);
     }
 
-    public static void createPost(Long galaxyId, String domain, String name) {
+    public static void createPost(Long galaxyId, String domain, String name, String analyticsAccount) {
         // Path check
         Galaxy galaxy = Galaxy.findById(galaxyId);
         if (galaxy == null) {
@@ -58,7 +58,7 @@ public class Sites extends AuthController {
             create(galaxyId);
         }        
         // Action
-        Site site = new Site(galaxy, domain, name);
+        Site site = new Site(galaxy, domain, name, analyticsAccount);
         site.save();
         index(galaxyId);
     }

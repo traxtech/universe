@@ -34,11 +34,13 @@ public class Site extends Model {
     public Galaxy galaxy;
     public String domain;
     public String name;
-
-    public Site(Galaxy galaxy, String domain, String name) {
+    public String analyticsAccount;
+    
+    public Site(Galaxy galaxy, String domain, String name, String analyticsAccount) {
         this.galaxy = galaxy;
         this.domain = domain;
         this.name = name;
+        this.analyticsAccount = analyticsAccount;
     }
 
     public List<Page> lastPages() {

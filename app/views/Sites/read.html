@@ -9,5 +9,7 @@
 </ul>
 
 <h1>${site.name}</h1>
-<p>${models.Hit.today(site)} hits today</p>
+#{info label:'Today hits', value:models.Hit.today(site) /}
+#{info label:'Google Analytics account', value:site.analyticsAccount /}
+
 <p><a href="@{Categories.index(galaxy.id,site.id)}">Categories</a></p>
