@@ -23,10 +23,10 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import play.db.jpa.JPABase;
 import play.db.jpa.Model;
 
 /**
@@ -36,23 +36,58 @@ import play.db.jpa.Model;
 @Entity
 public class Page extends Model {
 
+    /**
+     * Galaxy that contains the page (calculated field).
+     */
     @ManyToOne
+    @JoinColumn(nullable = false, updatable = false)
     public Galaxy galaxy;
+    /**
+     * Site that contains the page (calculated field).
+     */
     @ManyToOne
+    @JoinColumn(nullable = false, updatable = false)
     public Site site;
+    /**
+     * Galaxy that contains the page.
+     */
     @ManyToOne
+    @JoinColumn(nullable = false, updatable = false)
     public Category category;
+    /**
+     * Page creation date.
+     */
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false, updatable = false)
     public Date created;
+    /**
+     * Last page update date.
+     */
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false)
     public Date updated;
+    /**
+     * Page title.
+     */
     public String title;
+    /**
+     * Page excerpt in Markdown format.
+     */
     @Column(columnDefinition = "TEXT")
     public String excerpt;
+    /**
+     * Page excerpt in Html format.
+     */
     @Column(columnDefinition = "TEXT")
     public String htmlExcerpt;
+    /**
+     * Page content in Markdown format.
+     */
     @Column(columnDefinition = "TEXT")
     public String content;
+    /**
+     * Page content in Html format.
+     */
     @Column(columnDefinition = "TEXT")
     public String htmlContent;
 
@@ -61,20 +96,24 @@ public class Page extends Model {
         this.site = category.site;
         this.category = category;
         this.created = new Date();
-        this.updated = this.created;
         this.title = title;
         this.excerpt = excerpt;
         this.content = content;
     }
 
     @Override
-    public <T extends JPABase> T save() {
+    public Page save() {
+        if (updated == null) {
+            updated = created;
+        } else {
+            updated = new Date();
+        }
         MarkdownProcessor proc = new MarkdownProcessor();
         htmlExcerpt = proc.markdown(excerpt);
         htmlContent = proc.markdown(content);
         return super.save();
     }
-    
+
     public Page() {
     }
 

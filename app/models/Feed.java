@@ -19,6 +19,7 @@
 package models;
 
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -31,10 +32,21 @@ import play.db.jpa.Model;
 @Entity
 public class Feed extends Model {
 
+    /**
+     * Galaxy that contains the feed.
+     */
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(nullable = false, updatable = false)
     public Galaxy galaxy;
+    /**
+     * Feed name.
+     */
+    @Column(nullable = false)
     public String name;
+    /**
+     * Feed URL.
+     */
+    @Column(nullable = false)
     public String url;
 
     public Feed(Galaxy galaxy, String name, String url) {

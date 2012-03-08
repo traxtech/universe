@@ -20,9 +20,9 @@ package models;
 
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Query;
 import javax.persistence.Temporal;
@@ -38,20 +38,48 @@ import play.db.jpa.Model;
 @Entity
 public class FeedEntry extends Model {
 
+    /**
+     * Galaxy that contains the feed entry (calculated field).
+     */
     @ManyToOne
     @JoinColumn(nullable = false)
     public Galaxy galaxy;
+    /**
+     * 
+     */
     @ManyToOne
     @JoinColumn(nullable = false)
     public Feed feed;
+    /**
+     * Feed entry uri.
+     */
+    @Column(nullable = false, unique = true)
     public String uri;
+    /**
+     * Feed entry creation date (picked from the RSS feed).
+     */
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false)
     public Date created;
+    /**
+     * Feed entry title;
+     */
+    @Column(nullable = false)
     public String title;
-    @Lob
+    /**
+     * Feed entry Html content.
+     */
+    @Column(columnDefinition = "TEXT")
     public String htmlContent;
-    @Lob
+    /**
+     * Feed entry text content.
+     */
+    @Column(columnDefinition = "TEXT")
     public String textContent;
+    /**
+     * Determines if the feed entry is still visible to the user.
+     * An invisible feed entry can be scheduled for deletion.
+     */
     public boolean visible;
 
     public FeedEntry(Feed feed, String uri, Date created, String title, String htmlContent, String textContent) {
@@ -62,10 +90,15 @@ public class FeedEntry extends Model {
         this.title = title;
         this.htmlContent = htmlContent;
         this.textContent = textContent;
+        this.visible = true;
+    }
+
+    @Override
+    public FeedEntry save() {
         if ((textContent == null || textContent.isEmpty()) && htmlContent != null && !htmlContent.isEmpty()) {
             this.textContent = Jsoup.parse(htmlContent).text();
         }
-        this.visible = true;
+        return super.save();
     }
 
     public FeedEntry() {

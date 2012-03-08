@@ -21,8 +21,9 @@ package models;
 import com.petebevin.markdown.MarkdownProcessor;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Lob;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -35,18 +36,44 @@ import play.db.jpa.Model;
 @Entity
 public class Category extends Model {
 
+    /**
+     * Galaxy that contains the category (calculated field).
+     */
     @ManyToOne
+    @JoinColumn(nullable = false, updatable = false)
     public Galaxy galaxy;
+    /**
+     * Site that contains the category.
+     */
     @ManyToOne
+    @JoinColumn(nullable = false, updatable = false)
     public Site site;
+    /**
+     * Parent category, aka 'parent.child = this'.
+     */
     @ManyToOne
+    @JoinColumn(updatable = false)
     public Category parent;
+    /**
+     * Creation date.
+     */
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false, updatable = false)
     public Date creation;
+    /**
+     * Category name.
+     */
+    @Column(nullable = false)
     public String name;
-    @Lob
+    /**
+     * Category description in Markdown format.
+     */
+    @Column(columnDefinition = "TEXT")
     public String description;
-    @Lob
+    /**
+     * Category description in Html format.
+     */
+    @Column(columnDefinition = "TEXT")
     public String htmlDescription;
 
     public Category(Site site, Category parent, String name, String description) {
@@ -56,7 +83,12 @@ public class Category extends Model {
         this.creation = new Date();
         this.name = name;
         this.description = description;
-        this.htmlDescription = new MarkdownProcessor().markdown(this.description);
+    }
+
+    @Override
+    public Category save() {
+        htmlDescription = new MarkdownProcessor().markdown(description);
+        return super.save();
     }
 
     public List<Category> children() {

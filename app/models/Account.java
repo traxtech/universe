@@ -19,6 +19,7 @@
 package models;
 
 import java.util.UUID;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import play.db.jpa.Model;
@@ -30,9 +31,24 @@ import play.db.jpa.Model;
 @Entity
 public class Account extends Model {
 
+    /**
+     * Used to encrypt (salt+hash) and check passwords, from the Jasypt library.
+     */
     private static final StrongPasswordEncryptor PWD_ENC = new StrongPasswordEncryptor();
+    /**
+     * Account login.
+     */
+    @Column(nullable = false, updatable = false, unique = true)
     public String login;
+    /**
+     * Account password, encrypted.
+     */
+    @Column(nullable = false)
     public String password;
+    /**
+     * Session token.
+     */
+    @Column(nullable = false, unique = true)
     public String access;
 
     public Account(String login, String plainPassword) {

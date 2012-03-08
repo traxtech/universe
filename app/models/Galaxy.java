@@ -19,6 +19,7 @@
 package models;
 
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import play.db.jpa.Model;
 
@@ -29,6 +30,10 @@ import play.db.jpa.Model;
 @Entity
 public class Galaxy extends Model {
 
+    /**
+     * Galaxy name.
+     */
+    @Column(nullable = false)
     public String name;
 
     public Galaxy(String name) {

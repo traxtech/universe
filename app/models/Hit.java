@@ -20,6 +20,7 @@ package models;
 
 import java.util.Calendar;
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -38,21 +39,55 @@ import play.mvc.Http.Request;
 @Entity
 public class Hit extends Model {
 
+    /**
+     * Galaxy that contains the site where the hit occured.
+     */
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(nullable = false, updatable = false)
     public Galaxy galaxy;
+    /**
+     * Site where the hit occured.
+     */
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(nullable = false, updatable = false)
     public Site site;
+    /**
+     * Category where the hit occured.
+     */
     @ManyToOne
+    @JoinColumn(updatable = false)
     public Category category;
+    /**
+     * Page whete the hit occured.
+     */
     @ManyToOne
+    @JoinColumn(updatable = false)
     public Page page;
+    /**
+     * Hit date, extracted from the Http request.
+     */
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(nullable = false, updatable = false)
     public Date created;
+    /**
+     * Hit host, extracted from the Http request.
+     */
+    @Column(nullable = false, updatable = false)
     public String host;
+    /**
+     * Hit path, extracted from the Http request.
+     */
+    @Column(nullable = false, updatable = false)
     public String path;
+    /**
+     * Hit referer, extracted from the Http request (optional).
+     */
+    @Column(updatable = false)
     public String referer;
+    /**
+     * Hit user agent, extracted from the Http request (optional).
+     */
+    @Column(updatable = false)
     public String userAgent;
 
     public Hit(Site site, Request request) {

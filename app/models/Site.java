@@ -19,7 +19,9 @@
 package models;
 
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import play.db.jpa.Model;
 
@@ -30,11 +32,29 @@ import play.db.jpa.Model;
 @Entity
 public class Site extends Model {
 
+    /**
+     * Galaxy that contains the site.
+     */
     @ManyToOne
+    @JoinColumn(nullable = false, updatable = false)
     public Galaxy galaxy;
+    /**
+     * Domain name of the site (host).
+     */
+    @Column(nullable = false)
     public String domain;
+    /**
+     * Site name.
+     */
+    @Column(nullable = false)
     public String name;
+    /**
+     * Google Analytics account.
+     */
     public String analyticsAccount;
+    /**
+     * Google AdSense account.
+     */
     public String adSenseRef;
 
     public Site(Galaxy galaxy, String domain, String name, String analyticsAccount, String adSenseRef) {
