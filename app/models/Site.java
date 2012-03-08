@@ -20,6 +20,7 @@ package models;
 
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import play.db.jpa.Model;
 
@@ -35,12 +36,15 @@ public class Site extends Model {
     public String domain;
     public String name;
     public String analyticsAccount;
+    @Lob
+    public String adSenseRef;
     
-    public Site(Galaxy galaxy, String domain, String name, String analyticsAccount) {
+    public Site(Galaxy galaxy, String domain, String name, String analyticsAccount, String adSenseRef) {
         this.galaxy = galaxy;
         this.domain = domain;
         this.name = name;
         this.analyticsAccount = analyticsAccount;
+        this.adSenseRef = adSenseRef;
     }
 
     public List<Page> lastPages() {
