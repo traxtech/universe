@@ -9,18 +9,16 @@
     <li><a href="@{Categories.index(galaxy.id,site.id)}">Categories</a><span class="divider">:</span></li>
     <li><a href="@{Categories.read(galaxy.id,site.id,category.id)}">${category.name}</a><span class="divider">/</span></li>
     <li><a href="@{Pages.index(galaxy.id,site.id,category.id)}">Pages</a><span class="divider">:</span></li>
-    <li>${page.title}</li>
+    <li><a href="@{Pages.read(galaxy.id,site.id,category.id,page.id)}">${page.title}</a><span class="divider">:</span></li>
+    <li>Update</li>
 </ul>
 
-<div class="row">
-    <div class="span10">
-        <h1>${page.title}</h1>
-        <hr/>
-        ${page.htmlExcerpt.raw()}
-        <hr/>
-        ${page.htmlContent.raw()}
-    </div>
-    <div class="span2">
-        <a class="btn" href="@{Pages.update(galaxy.id,site.id,category.id,page.id)}">Update</a>
-    </div>
-</div>
+#{bsForm action:@Pages.updatePost(galaxy.id, site.id, category.id,page.id), actionText:'Update Page'}
+#{bsInfo name:'galaxy', desc:'Galaxy', info:galaxy.name /}
+#{bsInfo name:'site', desc:'Site', info:site.name /}
+#{bsInfo name:'category', desc:'Category', info:category.name /}
+#{bsInputText name:'title',desc:'Title' /}
+#{bsTextArea name:'excerpt',desc:'Excerpt' /}
+#{bsTextArea name:'content',desc:'Content' /}
+#{/bsForm}
+

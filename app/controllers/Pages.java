@@ -82,4 +82,46 @@ public class Pages extends AuthController {
         // Action
         render(galaxy, site, category, page);
     }
+    
+    public static void update(Long galaxyId, Long siteId, Long categoryId, Long pageId) {
+        // Path check
+        Galaxy galaxy = getGalaxy(galaxyId);
+        Site site = getSite(galaxy, siteId);
+        Category category = getCategory(site, categoryId);
+        Page page = getPage(category, pageId);
+        // Action
+        if(!flash.contains("title")) {
+            flash("title", page.title);
+            flash("excerpt", page.excerpt);
+            flash("content", page.content);
+        }
+        render(galaxy, site, category, page);        
+    }
+    
+    public static void updatePost(Long galaxyId, Long siteId, Long categoryId, Long pageId, String title, String excerpt, String content) {
+        // Path check
+        Galaxy galaxy = getGalaxy(galaxyId);
+        Site site = getSite(galaxy, siteId);
+        Category category = getCategory(site, categoryId);
+        Page page = getPage(category, pageId);
+        // Params check
+        checkAuthenticity();
+        validation.required(title);
+        validation.minSize(title, 4);
+        validation.required(excerpt);
+        validation.minSize(excerpt, 10);
+        validation.required(content);
+        validation.minSize(content, 100);
+        if (validation.hasErrors()) {
+            params.flash();
+            validation.keep();
+            update(galaxyId, siteId, categoryId, pageId);
+        }
+        // Action
+        page.title = title;
+        page.excerpt = excerpt;
+        page.content = content;
+        page.save();
+        read(galaxyId, siteId, categoryId, pageId);
+    }
 }

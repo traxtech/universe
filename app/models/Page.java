@@ -26,6 +26,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import play.db.jpa.JPABase;
 import play.db.jpa.Model;
 
 /**
@@ -63,11 +64,17 @@ public class Page extends Model {
         this.updated = this.created;
         this.title = title;
         this.excerpt = excerpt;
-        this.htmlExcerpt = new MarkdownProcessor().markdown(this.excerpt);
         this.content = content;
-        this.htmlContent = new MarkdownProcessor().markdown(this.content);
     }
 
+    @Override
+    public <T extends JPABase> T save() {
+        MarkdownProcessor proc = new MarkdownProcessor();
+        htmlExcerpt = proc.markdown(excerpt);
+        htmlContent = proc.markdown(content);
+        return super.save();
+    }
+    
     public Page() {
     }
 
