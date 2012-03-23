@@ -42,7 +42,7 @@ public class Sites extends AuthController {
         render(galaxy);
     }
 
-    public static void createPost(Long galaxyId, String domain, String name, String analyticsAccount, String adSenseRef) {
+    public static void createPost(Long galaxyId, String domain, String name, String analyticsAccount, String adSenseRef, String disqusShortname) {
         // Path check
         Galaxy galaxy = Galaxy.findById(galaxyId);
         if (galaxy == null) {
@@ -58,11 +58,60 @@ public class Sites extends AuthController {
             create(galaxyId);
         }
         // Action
-        Site site = new Site(galaxy, domain, name, analyticsAccount, adSenseRef);
+        Site site = new Site(galaxy, domain, name, analyticsAccount, adSenseRef, disqusShortname);
         site.save();
         index(galaxyId);
     }
 
+    public static void update(Long galaxyId, Long siteId) {
+        Galaxy galaxy = Galaxy.findById(galaxyId);
+        if (galaxy == null) {
+            notFound();
+        }
+        Site site = Site.findById(siteId);
+        if (site == null || !site.galaxy.equals(galaxy)) {
+            notFound();
+        }
+        // Action
+        if(!flash.contains("domain")) {
+            flash("domain", site.domain);
+            flash("name", site.name);
+            flash("analyticsAccount", site.analyticsAccount);
+            flash("adSenseRef", site.adSenseRef);
+            flash("disqusShortname", site.disqusShortname);
+        }
+        render(galaxy, site);
+    }
+    
+    public static void updatePost(Long galaxyId, Long siteId, String domain, String name, String analyticsAccount, String adSenseRef, String disqusShortname) {
+        // Path check
+        Galaxy galaxy = Galaxy.findById(galaxyId);
+        if (galaxy == null) {
+            notFound();
+        }
+        Site site = Site.findById(siteId);
+        if (site == null) {
+            notFound();
+        }
+        // Params check
+        checkAuthenticity();
+        validation.required(name);
+        validation.minSize(name, 4);
+        if (validation.hasErrors()) {
+            params.flash();
+            validation.keep();
+            create(galaxyId);
+        }
+        // Action
+        site.domain = domain;
+        site.name = name;
+        site.analyticsAccount = analyticsAccount;
+        site.adSenseRef = adSenseRef;
+        site.disqusShortname = disqusShortname;
+        site.save();
+        read(galaxyId,siteId);
+    }
+    
     public static void read(Long galaxyId, Long siteId) {
         Galaxy galaxy = Galaxy.findById(galaxyId);
         if (galaxy == null) {

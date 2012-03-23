@@ -5,10 +5,11 @@
     <li><a href="@{Galaxies.index()}">Galaxies</a><span class="divider">:</span></li>
     <li><a href="@{Galaxies.read(galaxy.id)}">${galaxy.name}</a><span class="divider">/</span></li>
     <li><a href="@{Sites.index(galaxy.id)}">Sites</a><span class="divider">:</span></li>
-    <li>Add</li>
+    <li><a href="@{Sites.read(galaxy.id,site.id)}">${site.name}</a><span class="divider">:</span></li>
+    <li>Update</li>
 </ul>
 
-#{bsForm action:@Sites.createPost(galaxy.id), actionText:'Add Site'}
+#{bsForm action:@Sites.updatePost(galaxy.id,site.id), actionText:'Update Site'}
 #{bsInfo name:'galaxy', desc:'Galaxy', info:galaxy.name /}
 #{bsInputText name:'name',desc:'Name' /}
 #{bsInputText name:'domain',desc:'Domain' /}

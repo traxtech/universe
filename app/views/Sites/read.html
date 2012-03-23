@@ -9,6 +9,7 @@
 </ul>
 
 <div class="btn-group">
+    <a class="btn" href="@{Sites.update(galaxy.id,site.id)}">Update</a>
     <a class="btn" href="@{Categories.index(galaxy.id,site.id)}">Manage Categories</a>
 </div>
 
@@ -16,3 +17,4 @@
 #{info label:'Today hits', value:models.Hit.today(site) /}
 #{info label:'Google Analytics Account', value:site.analyticsAccount /}
 #{info label:'Google AdSense Reference', value:site.adSenseRef /}
+#{info label:'Disqus Shortname', value:site.disqusShortname /}

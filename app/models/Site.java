@@ -56,13 +56,18 @@ public class Site extends Model {
      * Google AdSense account.
      */
     public String adSenseRef;
+    /**
+     * Disqus shortname (for comments).
+     */
+    public String disqusShortname;
 
-    public Site(Galaxy galaxy, String domain, String name, String analyticsAccount, String adSenseRef) {
+    public Site(Galaxy galaxy, String domain, String name, String analyticsAccount, String adSenseRef, String disqusShortname) {
         this.galaxy = galaxy;
         this.domain = domain;
         this.name = name;
         this.analyticsAccount = analyticsAccount;
         this.adSenseRef = adSenseRef;
+        this.disqusShortname = disqusShortname;
     }
 
     public List<Page> lastPages() {
