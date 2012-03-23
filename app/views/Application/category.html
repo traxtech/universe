@@ -69,8 +69,9 @@
             ${category.htmlDescription.raw()}
             #{list items:category.lastPages(),as:'lastPage'}
             <h3><a href="@{Application.page(lastPage.id)}">${lastPage.title}</a></h3>
-            <p>${lastPage.created.format('yyyy-MM-dd HH:mm')}</p>
-            ${lastPage.htmlExcerpt.raw()}
+            <p>${lastPage.created.format()}</p>
+            <div>${lastPage.htmlExcerpt.raw()}</div>
+            <div><a href="@{Application.page(lastPage.id)}" rel="nofollow">&{'readMore'}</a></div>
             <hr/>
             #{/list}
         </div>

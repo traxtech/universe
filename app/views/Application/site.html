@@ -66,8 +66,9 @@
         <div class="container">
             #{list site.lastPages(),as:'lastPage'}
             <h3><a href="@{Application.page(lastPage.id)}">${lastPage.title}</a></h3>
-            <p>${lastPage.created.format('yyyy-MM-dd HH:mm')} in <a href="@{Application.category(lastPage.category.id)}">${lastPage.category.name}</a></p>
-            ${lastPage.htmlExcerpt.raw()}
+            <p>${lastPage.created.format('yyyy-MM-dd HH:mm')} : <a href="@{Application.category(lastPage.category.id)}">${lastPage.category.name}</a></p>
+            <div>${lastPage.htmlExcerpt.raw()}</div>
+            <div><a href="@{Application.page(lastPage.id)}" rel="nofollow">&{'readMore'}</a></div>
             <hr/>
             #{/list}
         </div>
