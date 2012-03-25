@@ -73,7 +73,7 @@
                     <div align="right">${lastPage.created.format('yyyy-MM-dd HH:mm')} : <a href="@{Application.category(lastPage.category.id)}">${lastPage.category.name}</a></div>
                 </div>
             </div>
-            <div>${lastPage.htmlExcerpt.raw()}<br/><a href="@{Application.page(lastPage.id)}" rel="nofollow">&{'readMore'}</a></div>
+            <div>${lastPage.getCompactHtmlExcerpt().raw()}<br/><a href="@{Application.page(lastPage.id)}" rel="nofollow">&{'readMore'}</a></div>
             <hr/>
             #{/list}
         </div>

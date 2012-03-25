@@ -101,6 +101,14 @@ public class Page extends Model {
         this.content = content;
     }
 
+    public String getCompactHtmlExcerpt() {
+        if (htmlExcerpt != null && htmlExcerpt.startsWith("<p>") && htmlExcerpt.endsWith("</p>\n")) {
+            return htmlExcerpt.substring(3, htmlExcerpt.length() - 5);
+        } else {
+            return htmlExcerpt;
+        }
+    }
+    
     @Override
     public Page save() {
         if (updated == null) {
